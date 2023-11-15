@@ -1,0 +1,592 @@
+#To edit and compare internal_properties, use WINDEV integrated tools.
+#Internal properties refer to the properties of controls in windows, reports, etc.
+info :
+ name : pWMI
+ major_version : 28
+ minor_version : 0
+ type : 7
+ description : ""
+ subtype : 0
+procedure_set :
+ identifier : 0x1210890101da11e7
+ internal_properties : CAAAAAgAAABGLu41kG7fjQV3iS4F72qmnKaNh5694reolNKIW0iw
+ code_elements :
+  internal_properties : CAAAAAgAAACkT9Zi/rz5ueg+lEvSf8cVQRws1wbQYe4SzV6yuV1wE8VRioC9T6Ps6odUake2y+sii7Te2yZh4v2q0d4Uc9eE1bOadxTVxnXm+r9Bmpv/4kMhmE5Ptdt3E5XhV3z2jbE00QFeXFZLAfAssm8x86nB2Lb4zhAc+Gak/WKzOmVydpbdDVbeeMiBKt8hbMDERU3e+Z9aoQPvnSrL+Vi5VHc1JhXjtFZiH0Swb2Sk9ptpc7pDsR2rSAic2pm06K2mzNaSUR0miH4PECOGNnYn6Mc3b9TZv8a5y3E1MXp7n8vWrChVWsZJjQT4IkzTJOxxyyWLkE553sgPWESYPYGsZJI4BYxGa+b0f8bMIpGgyFYBiJLKboDLYKmKNzTAvvHDf33h8grFDu12JoNXiwNhiHxWjZWdt95ato4r0DYIZmzZEwOMF9IK3A4jF0OEJ8Mj4qqETh/3Fxscp1hY3oMwyNdBortOAtjA/fNbiYNrmJfVVEzQoQCLd3iiRjeHbU1DtR7Nn1sOaiw9yIy8cdaFRlXs1+E8fpCYARUBoPFTAOkftya1RSgqS9Zn1Zwe92J1OjFLn1EDq7zIbsGx2yebRcR4kCrCneoVx7kJNu4+SXZeQn/r7jPGQQyUIvz1e+RZdPG4y1Y9PY9OTky21d9BBga4oILprJSYV1UwNjBriRL//MX3Hz26albkhuAWesuGMGpx/gsplOIgT2N8parA/PW3KMZ+dFyErF4Zdr3kx/bz/W9HK/iuynXYhZKb2RdskZLhXmTSRrBNa2DM
+  type_code : 31
+  p_codes :
+   -
+     code : |1-
+      gsServeur est une chaine = "\\" + NetNomMachine() +"\"
+      gsUtilisateur est une chaine = ""
+      gsPassword est une chaine = ""
+     type : 720896
+  procedures :
+   -
+     name : RécupèreInfoGroupes
+     internal_properties : CAAAAAgAAAAogPlsBUUHDbSHghxhqM1qYWxziv0dsDXgULSkP4u2CxLy5pbtKqBQ+lhxGgpTW71ktU8qhZ2NTC/CbgwUWpqwawfoNbTBRbWYZ0l5H0u/i1wfXLbGuaLBWXZhqYZX40r433CMrQCgy9MOOdJbtZJ3DlRaD8myUXZzOLd3FAS4baxWCLzJ1vvWjCGzCYToOVkdLIJzymI06u/GrNa54JaiJJG+Vs7L
+     procedure_id : 1301691715718011376
+     type_code : 15
+     code : |1-
+      // Syntaxe :
+      //[ <Résultat> = ] RécupèreInfoGroupes ()
+      //
+      // Cette procédure permet de récupérer différentes informations sur les Groupes d'utilisateurs
+      // Paramètres :
+      //	Aucun
+      // Valeur de retour :
+      // 	chaîne : Nom du groupe + TAB + Description
+      
+      Procédure RécupèreInfoGroupes()
+      
+      sChaineRetour est une chaine
+      sListeInfo est une chaine
+      sUneInformation est une chaine
+      
+      
+      // Récupération de toutes les informations sur les groupes
+      sListeInfo = RécupèreContenu("win32_Group", gsServeur + "root\CIMV2")
+      
+      POUR TOUTE CHAINE sUneInformation DE sListeInfo SEPAREE PAR RC+RC
+      
+      	// Récupération des informations
+      	sChaineRetour += TrouveInformation(sUneInformation, "Name") + TAB + TrouveInformation(sUneInformation, "Description") +RC
+      	
+      FIN
+      
+      
+      renvoyer sChaineRetour
+     type : 458752
+   -
+     name : RécupèreInfoLecteurs
+     internal_properties : CAAAAAgAAACFFUwKZUE/T/lh1xrvUYt3CMaNUyQxLsPFjIaYw6RkzVd4S6DiICKRvyc6ATzJutOyux1dpVjAMrJimpcUW2Qf5UHKJcWu2lwFIGXNGqWJQ7WzSNYCLImWE0HAqI21ynSZs9Aw5KDFYBpM6v8Un7p//+T62w7ynJ0ATFJm67igHeRkulO5eNmvbwQyiI7Zxa2FewdDbw6LtyK9B2y5EcR8Pfx6gw+Wsz5KFZ33L8LsoAmkkRA8gi7Zmh/9pKl23XSSkg==
+     procedure_id : 1301691715718077131
+     type_code : 15
+     code : |1-
+      // Syntaxe :
+      //[ <Résultat> = ] RécupèreInfoLecteurs ()
+      //
+      // Cette procédure permet de récupérer différentes informations sur les Lecteurs (réseaux, disques durs, disques amovibles...)
+      // Paramètres :
+      //	Aucun
+      // Valeur de retour :
+      // 	chaîne : Lettre de lecteur + TAB + Description +TAB + Nom de Volume + TAB + Système de fichier + TAB + Espace Total + Espace Dispo + TAB + Provider Name
+      
+      Procédure RécupèreInfoLecteurs()
+      
+      sChaineRetour est une chaine
+      sListeInfo est une chaine
+      sUneInformation est une chaine
+      
+      
+      // Récupération de toutes les informations sur les lecteurs
+      sListeInfo = RécupèreContenu("win32_LogicalDisk", gsServeur + "root\CIMV2")
+      
+      POUR TOUTE CHAINE sUneInformation DE sListeInfo SEPAREE PAR RC+RC
+      
+      	// Récupération des informations
+      	sChaineRetour += [RC] + TrouveInformation(sUneInformation, "Caption")
+      	sChaineRetour += [TAB] + TrouveInformation(sUneInformation, "Description")
+      	sChaineRetour += [TAB] + TrouveInformation(sUneInformation, "VolumeName")
+      	sChaineRetour += [TAB] + TrouveInformation(sUneInformation, "FileSystem")
+      	sChaineRetour += [TAB] + TrouveInformation(sUneInformation, "Size")
+      	sChaineRetour += [TAB] + TrouveInformation(sUneInformation, "FreeSpace")
+      	sChaineRetour += [TAB] + TrouveInformation(sUneInformation, "ProviderName")
+      	
+      FIN
+      
+      
+      renvoyer sChaineRetour
+     type : 458752
+   -
+     name : RécupèreInfoOS
+     internal_properties : CAAAAAgAAABcaZBcAspfMnYv/aY/k19w11BtYzsDO8EAFo3xybaAovQMTEgMZlYdVJ3UAbp5A3X/MECifKK59HbX7P72JBp2XYQ1oaoERvIrwAI1mcpXvdS2u1YpXRgT0g372Gv5C2bmiftW2BjA1xiB0aGmETanIuRDH/I6EcogE4+6mT6at4AWJb6gfLt6EcyzSEH+jxosR4bGSo8vWJjZlGi7z5FNPfjRpg==
+     procedure_id : 1301691715718142792
+     type_code : 15
+     code : |1-
+      // Syntaxe :
+      //[ <Résultat> = ] RécupèreInfoOS ()
+      //
+      // Cette procédure permet de récupérer différentes informations sur le système d'exploitation
+      // Paramètres :
+      //	Aucun
+      // Valeur de retour :
+      // 	chaîne :   Nom de l'OS +TAB + Service Pack + TAB +Version Officielle + TAB +Numéro de série + TAB +Chemin d'installation + TAB 
+      // 			+ DateHeure d'installation + TAB + DateHeure REdémérrage + TAB + Utilisateur en cours + TAB
+      
+      Procédure RécupèreInfoOS()
+      
+      sChaineRetour est une chaine
+      sListeInfo est une chaine
+      sUneInformation est une chaine
+      
+      
+      // Récupération de toutes les informations sur l'OS
+      sListeInfo = RécupèreContenu("win32_OperatingSystem", gsServeur + "root\CIMV2")
+      
+      // Si la liste des informations est vide, c'est qu'il y a eu une erreur
+      si sListeInfo ~= "" alors renvoyer ""
+      
+      POUR TOUTE CHAINE sUneInformation DE sListeInfo SEPAREE PAR RC+RC
+      
+      	// Récupération des informations
+      	sChaineRetour += [RC] + TrouveInformation(sListeInfo, "Caption")
+      	sChaineRetour += TAB + TrouveInformation(sListeInfo, "CSDVersion")
+      	sChaineRetour += TAB + TrouveInformation(sListeInfo, "Version")
+      	sChaineRetour += TAB + TrouveInformation(sListeInfo, "SerialNumber")
+      	sChaineRetour += TAB + TrouveInformation(sListeInfo, "WindowsDirectory")
+      	sChaineRetour += TAB + TrouveInformation(sListeInfo, "InstallDate")[[ A 12]]
+      	sChaineRetour += TAB + TrouveInformation(sListeInfo, "LastBootUpTime")[[ A 12]]
+      	sChaineRetour += TAB + TrouveInformation(sListeInfo, "RegisteredUser")
+      	
+      FIN
+      
+      
+      renvoyer sChaineRetour
+     type : 458752
+   -
+     name : RécupèreInfoRéseau
+     internal_properties : CAAAAAgAAADYUEm8fN2ZMygLSOrThJ/Y9Sjf3qthEpds7GLG1dPkJQ6Gnp7f8kJ64oDTbCgTgffAST/CFyVPdm/iJH56asDGP7tMMZLFS0uMGyuDbYvx/cxH9FMzdkPQUj9a4HOcJg+tBBP5AiXJ8jSvuv3sJgXky4mdBAI7/hXMATAutUXDshHDYzFCd3hVCWZo4EVBYEJy+dWAf18VzYwjqTG+zYXTZWGOBh67
+     procedure_id : 1301691715718208468
+     type_code : 15
+     code : |1-
+      // Syntaxe :
+      //[ <Résultat> = ] RécupèreInfoRéseau ()
+      //
+      // Cette procédure permet de récupérer différentes informations sur les périphériques réseaux et leur configuration
+      // Paramètres :
+      //	Aucun
+      // Valeur de retour :
+      // 	chaîne : Description + TAB + Adresse MAC+ TAB + Nom DNS
+      
+      Procédure RécupèreInfoRéseau()
+      
+      sChaineRetour est une chaine
+      sListeInfo est une chaine
+      sUneInformation est une chaine
+      
+      
+      // Récupération de toutes les informations sur le réseau
+      sListeInfo = RécupèreContenu("win32_NetworkAdapterConfiguration", gsServeur + "root\CIMV2")
+      
+      POUR TOUTE CHAINE sUneInformation DE sListeInfo SEPAREE PAR RC+RC
+      
+      	// Récupération des informations
+      	sChaineRetour += [RC] + TrouveInformation(sUneInformation, "Caption")
+      	sChaineRetour += [TAB] + TrouveInformation(sUneInformation, "Description")
+      	sChaineRetour += [TAB] + TrouveInformation(sUneInformation, "MACAddress")
+      	sChaineRetour += [TAB] + TrouveInformation(sUneInformation, "DNSHostName")
+      	
+      FIN
+      
+      
+      renvoyer sChaineRetour
+     type : 458752
+   -
+     name : RécupèreInfoUtilisateurs
+     internal_properties : CAAAAAgAAAD4cKmc3L1560gbKLrD5K/4tai/TisBwud8jJJmdaOEVX7W7l6PYuJa4nDTnNjz8VegKT+yl4Wf5h/iNH76uoAWT2sckSJVa+ssi8sT3UshneynlJurrjvYutcSmIt0LldlTOtBuv3hmpyH0rUkHg2sIxEV7BrTdh3UGQhGLf2rmskLu1kar/BdMZ7gOB156MrqYU0oF7fNdRT7Ien2hWUzxcFuJv6b
+     procedure_id : 1301691715718274160
+     type_code : 15
+     code : |1-
+      // Syntaxe :
+      //[ <Résultat> = ] RécupèreInfoUtilisateurs ()
+      //
+      // Cette procédure permet de récupérer différentes informations sur les utilisateurs
+      // Paramètres :
+      //	Aucun
+      // Valeur de retour :
+      // 	chaîne : Informations utilisateur
+      
+      Procédure RécupèreInfoUtilisateurs()
+      
+      sChaineRetour est une chaine
+      sListeInfo est une chaine
+      sUneInformation est une chaine
+      
+      
+      // Récupération de toutes les informations sur les utilisateurs
+      sListeInfo = RécupèreContenu("win32_UserAccount", gsServeur + "root\CIMV2")
+      
+      POUR TOUTE CHAINE sUneInformation DE sListeInfo SEPAREE PAR RC+RC
+      	
+      	sChaineRetour += [RC] + TrouveInformation(sUneInformation, "Name")
+      	sChaineRetour += [tab] + TrouveInformation(sUneInformation, "Description")
+      
+      FIN
+      
+      
+      renvoyer sChaineRetour
+     type : 458752
+   -
+     name : RécupèrePartages
+     internal_properties : CAAAAAgAAABqejYeqzrmxnCgd9l00lv8VO/Q1BCEgog/MD+TBVTrB2fZ4WVAb28UAsGGzITcQzjeMd7yv9O0XXbPXsjyTiSeeC1uMubAcMo5+/N0FoN5iTCyN6Z3C0RikkmRRHATqK5Mwt5lXIwPV6P56OpueFiLxMvEQETYsGANUbwDvbtEtwt7ZOZ1YGPelhtKrYQGcSt6fhHnIJFOq/YPMi64xz8ngSAEf5K/aI5SLyzHyOxlBT24+/mwmryw56Sr3xAIkXrt
+     procedure_id : 1301691715718339884
+     type_code : 15
+     code : |1-
+      // Syntaxe :
+      //[ <Résultat> = ] RécupèrePartages ()
+      //
+      // Cette procédure permet de récupérer différentes informations sur les partages
+      // Paramètres :
+      //	Aucun
+      // Valeur de retour :
+      // 	chaîne : Nom du partage + TAB + libellé + TAB + Chemin Partagé
+      
+      Procédure RécupèrePartages()
+      
+      sChaineRetour est une chaine
+      sListeInfo est une chaine
+      sUneInformation est une chaine
+      
+      
+      // Récupération de toutes les informations sur les partages
+      sListeInfo = RécupèreContenu("win32_share",gsServeur + "root\CIMV2")
+      
+      POUR TOUTE CHAINE sUneInformation DE sListeInfo SEPAREE PAR RC+RC
+      
+      	// Récupération des informations
+      	sChaineRetour += [RC] + TrouveInformation(sUneInformation, "name")
+      	sChaineRetour += [tab] + TrouveInformation(sUneInformation, "caption")
+      	sChaineRetour += [TAB] + TrouveInformation(sUneInformation, "path")
+      
+      FIN
+      
+      
+      renvoyer sChaineRetour
+     type : 458752
+   -
+     name : RécupèreContenu
+     internal_properties : CAAAAAgAAAA0HTc9Jqmn5Cam/CKZA8fX/UGCc6kK4Fo8EtB0YITFpt3ntKweSqE2x2BRSl0gDXw6an8LGnhw01Q5Uvs/CPGE8E/O+UnK/qx7PVYxwuMur3F0bXXJV4RLEPYY2PE9FJVg0nPoPmIx00VgF8zh+LoG/HOBdq/6iMWohhXcobRHJ8pPZBYp4P2bUfi74s16s2CiK6lB6kSzsPajHlZTQ7FRWDo2eXcPh66M9FNZFp9Dkkv6ElzSHZUB48jftojquV+ZpnihjNLB1Gvaau8ClU7cdcyOZ9QoXFBVZwse/2G/cxx/2FAeL3tGDA==
+     procedure_id : 1301718099711858965
+     type_code : 15
+     code : |1-
+      // Syntaxe :
+      //[ <Résultat> = ] RécupèreContenu (<sClasse>, <sPath> [, <sCondition>])
+      //
+      // Paramètres :
+      //	sClasse : Le nom de la classe dont on doit récupérer le contenu
+      //	sPath : le namespace de la classe (attention dans le cas d'un ordinateur distant, doit être précédé de "\\" + nomordi)
+      //	sCondition (valeur par défaut="") : Condition à appliquer à la requête (ex : Propriété1 = 1)
+      // Valeur de retour :
+      // 	Type indéterminé : 
+      // Propriété1 + TAB + Valeur + RC + Propriété2 + TAB + Valeur2 + RC
+      
+      // Utilisez la fonction TrouveInformation pour récupérer la valeur d'une propriété précise
+      
+      Procédure RécupèreContenu(sClasse, sPath, sCondition = "")
+      
+      
+      sName est une chaine // Nom de la propriété
+      sChaineRetour est une chaine // La Valeur de retour
+      pclIEnumValeur est un IEnumerator dynamique // Une Instance de la classe
+      pclMonObjet est un  ManagementObject dynamique // Instance de la classe courante
+      pclMaPropriété est un PropertyData dynamique // Propriété courante
+      pclIEnumPropriétés est un IEnumerator dynamique // Enumérateur sur les propriétés
+      sRequête est une chaine = "SELECT * FROM " + sClasse // Requête à envoyer au WMI
+      bResObjet est un booléen // Résultat du parcours des instances
+      bResPropriétés est un booléen // Résultat du parcours des propriétés
+      clMonChemin est un ManagementPath(sPath) // Chemin de recherche
+      sRes est une chaîne // Valeur de la propriété
+      clMesOptions est un ConnectionOptions() // Options de connexion
+      
+      clMonScope est un ManagementScope(clMonChemin, clMesOptions) // Définition du champ de recherche
+      
+      // Construction de la requête avec la condition
+      si pas sCondition ~= "" ALORS
+      	sRequête += chaineconstruit(" where %1", sCondition)
+      FIN
+      
+      // Si on n'est pas en mode local
+      si gsServeur <> "\\" + completerep(NetNomMachine()) ALORS
+      	
+      	// Mise à jour des paramètres de connexion
+      	clMesOptions:Username = gsUtilisateur
+      	clMesOptions:Password = gsPassword
+      	
+      	clMonScope:set_Options(clMesOptions)	
+      	// On tente de se connecter
+      	quand exception dans
+      		clMonScope:connect()
+      	faire
+      		// Accès refusé
+      		erreur(chaineconstruit(<§@121088ff01d80ae20019§>, gsServeur), exceptioninfo())
+      		renvoyer ""	
+      	fin
+      	
+      FIN
+      
+      // Déclaration de la requête
+      clMaRequete est un ObjectQuery(sRequête)
+      // Exécution de la requête
+      clMaRecherche est un ManagementObjectSearcher(clMonScope, clMaRequete)
+      
+      // Récupération de l'énumérateur sur les valeurs
+      pclIEnumValeur = clMaRecherche:Get():GetEnumerator()
+      
+      quand Exception dans
+      	bResObjet = pclIEnumValeur:MoveNext()
+      faire
+      	
+      	// Si la condition n'est pas vide
+      	si pas sCondition ~= "" ALORS
+      		// La propriété n'existe pas
+      		info(chaineconstruit(<§@121088ff01d80ae2001a§>, sCondition), <§@121088ff01d80ae2001b§>)
+      		
+      		// On renvoie le contenu du fichier sans la condition
+      		renvoyer RécupèreContenu(sClasse, sPath)
+      	
+      	sinon
+      		// Affichage d'un message propre		
+      		info(<§@121088ff01d80ae2001c§>)
+      		renvoyer ""
+      				
+      	FIN
+      	
+      fin
+      
+      // Parcours de l'énumérateur
+      TANTQUE bResObjet = vrai
+      	
+      	// Récupération de l'objet courant
+      	pclMonObjet = pclIEnumValeur:get_Current()
+      	
+      	// Récupération de l'énumérateur sur les propriétés
+      	pclIEnumPropriétés = pclMonObjet:get_Properties():GetEnumerator()
+      	
+      	bResPropriétés = pclIEnumPropriétés:MoveNext()
+      		
+      	TANTQUE bResPropriétés = vrai
+      
+      		pclMaPropriété	= pclIEnumPropriétés:get_Current()
+      		sName = pclMaPropriété:name
+      
+      		quand exception dans
+      			sRes = pclMonObjet:GetPropertyValue(sName)
+      		faire
+      			sRes = <§@121088ff01d80ae2001d§>
+      		fin	
+      		
+      		// Mise à jour de la chaine de retour
+      		sChaineRetour += [RC] + sName + [tab] + sRes
+      		
+      		bResPropriétés = pclIEnumPropriétés:MoveNext()
+      		
+      	FIN
+      	
+      	// -------------------------------------
+      	// Récupération des Propriétés Système
+      	// -------------------------------------
+      	
+      	// Récupération de l'énumérateur sur les propriétés
+      	pclIEnumPropriétés = pclMonObjet:get_SystemProperties():GetEnumerator()
+      	
+      	bResPropriétés = pclIEnumPropriétés:MoveNext()
+      	
+      	// Parcours de propriétés système
+      	TANTQUE bResPropriétés = vrai
+      		
+      		// Récupération de la propriété courante
+      		pclMaPropriété = pclIEnumPropriétés:get_Current()
+      		
+      		// Récupération du nom
+      		sName = pclMaPropriété:name
+      		
+      		quand exception dans
+      			sRes = pclMonObjet:GetPropertyValue(sName)
+      		faire
+      			sRes = <§@121088ff01d80ae2001d§>
+      		fin	
+      		
+      		// Mise à jour de la chaine de retour
+      		sChaineRetour += [RC] + sName + [tab] + sRes
+      		
+      		// Passe à la propriété suivante
+      		bResPropriétés = pclIEnumPropriétés:MoveNext()
+      		
+      	FIN
+      	
+      	// Mise à jour de la chaîne de retour
+      	sChaineRetour += rc+RC
+      	quand exception dans 
+      		// Passe à l'instance suivante
+      		bResObjet = pclIEnumValeur:MoveNext()
+      	faire
+      	
+      		// On sort de la boucle
+      		sortir
+      		
+      	fin
+      FIN
+      
+      renvoyer sChaineRetour
+     type : 458752
+   -
+     name : TrouveInformation
+     internal_properties : CAAAAAgAAAAmUcIUBjpseZQka2m2CHOqRTIesuYlgQZusNBJOY7ix7Cte8o5iMS53obSUHbUIZo+DgYbHqQxg74a8Wbs+gy9dQZwJJAsm64kTK7dpXL5YheEZDIWOwCfbQLdbcgVjSjUA5QIPZ5inZGMh7h5sZzFSgge6yUuyW5hXj0J7gZGN6N9Jfd0V8ajWXbYYEVBpAak0GsCHbY=
+     procedure_id : 1301718104007088811
+     type_code : 15
+     code : |1-
+      // Syntaxe :
+      //[ <Résultat> = ] TrouveInformation (<sListeInfo> est chaîne, <sInfo> est chaîne)
+      //
+      // Cette procédure permet de récupérer la valeur d'une propriété dans une instance de classe récupérée par la fonction RécupèreContenu
+      
+      // Paramètres :
+      //	sListeInfo (chaîne ANSI) : La chaîne dans laquelle on doit rechercher la propriété
+      //	sInfo (chaîne ANSI) : Le nom de la propriété à rechercher
+      // Valeur de retour :
+      // 	chaîne ANSI : La valeur de la propriété demandée
+      
+      Procédure TrouveInformation(LOCAL sListeInfo est une chaine, LOCAL sInfo est une chaine)
+      
+      nPositionInfo est un entier
+      sChaineRetour est une chaine
+      
+      
+      // Recherche l'info demandée
+      nPositionInfo = position(sListeInfo, sInfo, 0, SansCasse+MotComplet)
+      
+      si nPositionInfo > 0 ALORS
+      	
+      	// On l'a trouvée, on récupère le texte contenu entre la position de l'information et un RC
+      	sChaineRetour = sListeInfo[[nPositionInfo a position(sListeInfo, rc, nPositionInfo)-1]]		
+      	// On ne récupère que la valeur
+      	sChaineRetour = extraitchaine(sChaineRetour, 2)
+      	
+      sinon
+      	sChaineRetour = ""
+      FIN
+      
+      
+      renvoyer sChaineRetour
+     type : 458752
+  procedure_templates : []
+  property_templates : []
+ code_parameters :
+  internal_properties : CAAAAAgAAACVGQgYbalU7DKC3oH4ItDrjtcTHXXV/EuH8q0IbhyQlw==
+resources :
+ string_res :
+  identifier : 0x121088ff01d80ae2
+  internal_properties : CAAAAAgAAACm76HWfKGWp33VjXInA4cRlqArlgTTA862QGt72W2ld5Y=
+  strings :
+   -
+     text :
+      fr-FR : \\
+     index : 0
+   -
+     text :
+      fr-FR : win32_Group
+     index : 1
+   -
+     text :
+      fr-FR : root\CIMV2
+     index : 2
+   -
+     text :
+      fr-FR : Name
+     index : 3
+   -
+     text :
+      fr-FR : win32_LogicalDisk
+     index : 4
+   -
+     text :
+      fr-FR : Caption
+     index : 5
+   -
+     text :
+      fr-FR : Description
+     index : 6
+   -
+     text :
+      fr-FR : FileSystem
+     index : 7
+   -
+     text :
+      fr-FR : Size
+     index : 8
+   -
+     text :
+      fr-FR : ProviderName
+     index : 9
+   -
+     text :
+      fr-FR : win32_OperatingSystem
+     index : 10
+   -
+     text :
+      fr-FR : CSDVersion
+     index : 11
+   -
+     text :
+      fr-FR : SerialNumber
+     index : 12
+   -
+     text :
+      fr-FR : WindowsDirectory
+     index : 13
+   -
+     text :
+      fr-FR : InstallDate
+     index : 14
+   -
+     text :
+      fr-FR : LastBootTime
+     index : 15
+   -
+     text :
+      fr-FR : RegisteredUser
+     index : 16
+   -
+     text :
+      fr-FR : win32_NetworkAdapterConfiguration
+     index : 17
+   -
+     text :
+      fr-FR : MACAddress
+     index : 18
+   -
+     text :
+      fr-FR : win32_UserAccount
+     index : 19
+   -
+     text :
+      fr-FR : win32_share
+     index : 20
+   -
+     text :
+      fr-FR : name
+     index : 21
+   -
+     text :
+      fr-FR : caption
+     index : 22
+   -
+     text :
+      fr-FR : "SELECT * FROM "
+     index : 23
+   -
+     text :
+      fr-FR : " where %1"
+     index : 24
+   -
+     text :
+      fr-FR : "L'accès à la machine : %1 vous a été refusé, contactez votre administrateur réseau"
+     index : 25
+   -
+     text :
+      fr-FR : La condition <%1> fait référence à une propriété non valide sur ce système d'exploitation
+     index : 26
+   -
+     text :
+      fr-FR : Cette condition ne sera pas prise en compte
+     index : 27
+   -
+     text :
+      fr-FR : Aucune instance de la classe n'est définie
+     index : 28
+   -
+     text :
+      fr-FR : <Vide>
+     index : 29
+custom_note :
+ internal_properties : CAAAAAgAAABtB9HWVzrXO2+4NDRVK0vmzaNKrCKqH1DBX30lMmGZ
